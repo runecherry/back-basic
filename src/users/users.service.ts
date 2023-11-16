@@ -26,7 +26,7 @@ export class UserService{
 
       }
 
-      async create(signUpDto: SignUpDto): Promise<UserDto | null | {CreationUserError: Error}>{
+      async create(signUpDto: SignUpDto): Promise<UserDto>{
         const user = new this.UserModel({...signUpDto})
         await user.save()
         return user;

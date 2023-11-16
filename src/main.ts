@@ -5,10 +5,10 @@ import { AppModule } from './app.module';
 import { AuthGuard } from './auth/guards/auth.guard';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {cors: true});
   app.useGlobalPipes(new ValidationPipe());
-  const reflector = app.get(Reflector);
-  app.useGlobalGuards(new AuthGuard(reflector));
+  //const reflector = app.get(Reflector);
+  //app.useGlobalGuards(new AuthGuard(reflector));
   const configService = app.get(ConfigService)
   const port = configService.get<string>("PORT")
   await app.listen(port||3000);

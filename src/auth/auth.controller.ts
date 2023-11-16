@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import {Body, Controller, Post, Req, UseGuards} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LogInDto } from './dto/logInDto.dto';
 import { SignUpDto } from './dto/signUpDto.dto';
@@ -11,19 +11,29 @@ export class AuthController {
 
     @Post('signUp')
     @Public()
-    @UseGuards(JwtAuthGuard)
-    async signUp(@Body() signUpDto: SignUpDto) {
+    async signUp(@Body() signUpDto: SignUpDto, @Req() req:Object) {
         //console.log('sign in')
-        const token= await this.authService.signUp(signUpDto);
-        return token
+        console.log(req)
+        const data = await this.authService.signUp(signUpDto);
+        return data
     }
 
     @Post('logIn')
     @Public()
     @UseGuards(JwtAuthGuard)
-    async create(@Body() logInDto: LogInDto) {
-        //console.log('log in')
-        return await this.authService.logIn(logInDto);
+    async create(@Req() req:any) {
+        console.log(req)
+        const {headers} = req
+        console.log({headers})
+        const b64auth = (headers.authorization || '').split(' ')[1] || '';
+        const [username, password] = Buffer.from(b64auth, 'base64')
+            .toString()
+            .split(':');
+        const  userData: LogInDto = {username, password}
+
+        console.log({username, password})
+        //return {username, password}
+        return await this.authService.logIn(userData);
     }
 
 }
