@@ -9,7 +9,7 @@ import { SignUpDto } from "../auth/dto/signUpDto.dto";
 import { UserService } from "./users.service";
 import { UserInfoDto } from "./dto/UserInfoDto.dto";
 
-@Controller('user')
+@Controller('users')
 export class UserController {
     constructor(private readonly userService: UserService) {} //dichiara ed inizializza
 
