@@ -13,7 +13,6 @@ import { UserInfoDto } from "./dto/UserInfoDto.dto";
 export class UserController {
     constructor(private readonly userService: UserService) {} //dichiara ed inizializza
 
-    
     @Post('create')
     async create(@Body() body: SignUpDto) {
         return await this.userService.create(body);
@@ -27,7 +26,7 @@ export class UserController {
         return await this.userService.findAll();
     }
 
-    @Get('profile')
+    @Get('me')
     @UseGuards(JwtAuthGuard)
     async findUserProfile(@Req() req: any) {
         const {userId} = req.user
@@ -41,6 +40,12 @@ export class UserController {
         return await this.userService.findOneById(id);
     }
 
+    @Put('me')
+    @UseGuards(JwtAuthGuard)
+    async updateProfile(@Req() req: any, @Body() body: UserInfoDto) {
+        const {userId} = req.user
+        return await this.userService.updateOne(userId, userId, body);
+    }
     @Put(':id')
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(ROLE.Admin)
@@ -49,12 +54,7 @@ export class UserController {
         return await this.userService.updateOne(id, userId, body);
     }
 
-    @Put('updateMe')
-    @UseGuards(JwtAuthGuard)
-    async updateProfile(@Req() req: any, @Body() body: UserInfoDto) {
-        const {userId} = req.user
-        return await this.userService.updateOne(userId, userId, body);
-    }
+
 
     @Put('activateMe/')
     @UseGuards(JwtAuthGuard)
@@ -85,7 +85,7 @@ export class UserController {
         const {userId, isAdmin} = req.user
         return await this.userService.deactivateOne(id, userId, isAdmin);
     }
-    
+
     @Delete(':id')
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(ROLE.Admin)

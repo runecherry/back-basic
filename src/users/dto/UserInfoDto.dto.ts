@@ -1,4 +1,4 @@
-import { IsBoolean, IsEmail, IsEnum, IsNotEmpty, IsString } from "class-validator";
+import {IsBoolean, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsString} from "class-validator";
 import { Types } from "mongoose";
 import { ROLE } from "src/auth/guards/roles/role.enum";
 
@@ -14,6 +14,26 @@ export class UserInfoDto {
     @IsString()
     @IsEmail()
     readonly email: string;
+
+    @IsOptional()
+    @IsString()
+    readonly name: string;
+
+    @IsOptional()
+    @IsString()
+    readonly surname: string;
+
+    @IsOptional()
+    @IsString()
+    readonly city: string;
+
+    @IsOptional()
+    @IsString()
+    readonly street: string;
+
+    @IsOptional()
+    @IsString()
+    readonly zipCode: string;
 
     @IsNotEmpty()
     @IsString()

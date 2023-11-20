@@ -25,11 +25,11 @@ export class AuthService {
         console.log('here')
         console.log({newUser})
         const token = this.jwtService.sign({id: newUser._id})
-        const UserInfoDto: UserInfoDto = newUser
+        const UserInfoDto: UserDto = newUser
         return {token, user: {username: UserInfoDto.username, email: UserInfoDto.email, role: UserInfoDto.role}};
       }
 
-      async logIn(logInDto: LogInDto): Promise<{token: string}|{LogInError: Error}>{
+      async logIn(logInDto: LogInDto): Promise<{token: string, user: Object}|{LogInError: Error}>{
         const { username, password} = logInDto
           const user = await this.userService.findOneByUsername({username})
           //console.log({user})
@@ -39,15 +39,15 @@ export class AuthService {
           const isPasswordMatched = await bcrypt.compare(password, user.password)
           if(!isPasswordMatched)
               throw new HttpException('Password not matched!', 409);
-
+          const UserInfoDto: UserInfoDto = user
           const token = this.jwtService.sign({id: user._id})
-          return {token};
+          return {token, user: {username: UserInfoDto.username, email: UserInfoDto.email, role: UserInfoDto.role, name: UserInfoDto.name, surname: UserInfoDto.surname, city: UserInfoDto.city,  street: UserInfoDto.street,  zipCode: UserInfoDto.zipCode}};
     }
 
     async validateUser(payload: any): Promise<{user: UserDto | null | any}> {
       //console.log({validateUser: payload})
       const user = await this.userService.findOneById(payload.id);
-      //console.log({'validateUser': user})
+      console.log({'validateUser': user})
       return {user}
     }
 

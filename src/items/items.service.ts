@@ -4,6 +4,7 @@ import { Item, ItemDocument } from './schema/item.schema';
 import { Model, Types } from 'mongoose';
 import { ItemUpdateDto } from './dto/ItemUpdateDto.dto';
 import { ItemCreateDto } from './dto/ItemCreateDto.dto';
+import _ from "lodash";
 
 @Injectable()
 
@@ -32,8 +33,11 @@ export class ItemService{
           const item = await this.ItemModel.create({...itemCreateDto, owner:userIdObject, lastUpdatedBy: userIdObject })
           return item;
         } catch (error) {
-          console.log({ CreationItemError: error})
-          return null
+          if(error?.keyPattern){
+            throw new HttpException('Duplicated key: ' + Object.keys(error.keyPattern).join(','), 409)
+          } else {
+            throw new HttpException(error, 409)
+          }
         }
       }
 

@@ -46,7 +46,7 @@ export class UserService{
           const objectId = this.generateObjectId(id);
           if(!objectId)
             throw new HttpException('Id not valid!', 409);
-          const user = await this.UserModel.findById(objectId);
+          const user :UserInfoDto = await this.UserModel.findById(objectId);
           if(!user)
             throw new HttpException('User not found!', 404);
           return user
@@ -57,10 +57,10 @@ export class UserService{
       }
 
       //only one that returns password
-      async findOneByUsername(username: {username: string}): Promise<UserInfoPswDto |  null> {
+      async findOneByUsername(username: {username: string}): Promise<UserInfoPswDto | any |  null> {
         try {
           //console.log(username)
-          const user : UserInfoPswDto = await this.UserModel.findOne(username).select('+password').exec();
+          const user : any = await this.UserModel.findOne(username).select('+password').exec();
           //console.log(user)
           if(!user)
             throw new HttpException('User not found!', 404);

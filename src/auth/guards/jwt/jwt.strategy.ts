@@ -17,7 +17,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
-    //console.log({payload})
+    console.log({payload})
     const { user } = await this.authService.validateUser(payload);
       if(!user)
           {
@@ -30,7 +30,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   /*
-  
+
   async validatePlus(payload: any, context: ExecutionContext){
 
     console.log('validateeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')
@@ -54,7 +54,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       else{
         return {user}
       }
-        
+
   }
   */
 
