@@ -44,8 +44,8 @@ export class OrderService{
           if(!userIdObject)
             throw new HttpException('User Id wrong', 409)
             const list = isAdmin
-            ? await this.OrderModel.find().populate("owner").populate("itemId").exec()
-            : await this.OrderModel.find({owner: userIdObject}).populate("itemId").exec();
+            ? await this.OrderModel.find().populate("owner").populate("itemId").populate("gymId").exec()
+            : await this.OrderModel.find({owner: userIdObject}).populate("itemId").populate("gymId").exec();
           return list
         } catch (error) {
           console.log({ErrorListOrders: error})
