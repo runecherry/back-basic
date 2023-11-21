@@ -19,7 +19,7 @@ export class Order extends hasOwner{
     qta: number
   }];
 
-  @Prop({ required: true, enum: STATUS_ORDER, default: STATUS_ORDER.BOUGHT })
+  @Prop({ enum: STATUS_ORDER, default: STATUS_ORDER.BOUGHT })
   status: string;
 
   @Prop({ required: false })
@@ -27,6 +27,9 @@ export class Order extends hasOwner{
 
   @Prop({ required: true })
   date: string;
+
+  @Prop({ required: true })
+  total: number;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

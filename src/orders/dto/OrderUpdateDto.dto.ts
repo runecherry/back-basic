@@ -1,4 +1,4 @@
-import {IsArray, IsBoolean, IsNotEmpty, IsOptional, IsString} from "class-validator";
+import {IsArray, IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString} from "class-validator";
 import { OrderCreateDto } from "./OrderCreateDto.dto";
 
 export class OrderUpdateDto extends OrderCreateDto {
@@ -13,6 +13,10 @@ export class OrderUpdateDto extends OrderCreateDto {
     @IsOptional()
     @IsString()
     status: string;
+
+    @IsOptional()
+    @IsNumber()
+    total: number;
 
     @IsOptional()
     @IsString()
