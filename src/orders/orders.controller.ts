@@ -23,8 +23,8 @@ export class OrderController {
     @Get('list')
     @UseGuards(JwtAuthGuard)
     async findAll(@Req() req: any) {
-        const {userId, isAdmin} = req.user
-        return await this.orderService.findAll(userId, isAdmin);
+        const {userId, isAdmin, isGym} = req.user
+        return await this.orderService.findAll(userId, isAdmin, isGym);
     }
 
     @Get(':id')

@@ -38,14 +38,14 @@ export class OrderService{
         }
       }
 
-      async findAll(userId: string| Types.ObjectId, isAdmin: boolean) {
+      async findAll(userId: string| Types.ObjectId, isAdmin: boolean, isGym: boolean) {
         try {
           const userIdObject = this.generateObjectId(userId)
           if(!userIdObject)
             throw new HttpException('User Id wrong', 409)
             const list = isAdmin
             ? await this.OrderModel.find().populate("owner").populate("itemId").populate("gymId").exec()
-            : await this.OrderModel.find({owner: userIdObject}).populate("itemId").populate("gymId").exec();
+            : await this.OrderModel.find({[isGym?'gymId' :'owner']: userIdObject}).populate("itemId").populate("gymId").exec();
           return list
         } catch (error) {
           console.log({ErrorListOrders: error})
