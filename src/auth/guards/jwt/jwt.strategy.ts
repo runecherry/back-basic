@@ -25,7 +25,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
           }
       else{
         //console.log('okk')
-        return {userId: user._id, role: user.role, isAdmin: user.role === ROLE.Admin ? true : false}
+        return {userId: user._id, role: user.role, isAdmin: user.role === ROLE.Admin ? true : false, isGym: user.role === ROLE.Gym ? true : false}
       }
   }
 

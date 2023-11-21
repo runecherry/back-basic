@@ -1,23 +1,19 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 import {Item} from 'src/items/schema/item.schema'
-import { TYPE_ORDER } from 'src/utils/enums/type_order.enum';
 import { STATUS_ORDER } from 'src/utils/enums/status_order.enum';
 import { hasOwner } from 'src/utils/schemas/hasOwner.shema';
+import {User} from "../../users/schema/user.schema";
 export type OrderDocument = HydratedDocument<Order>;
 
 @Schema({timestamps: true})
 export class Order extends hasOwner{
-  @Prop({ required: true,
-    type: [{
-    item_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Item', required: true },
-    qta: {type: Number, default: 1}
-  }]
-  })
-  items: [{
-    item_id: Item,
-    qta: number
-  }];
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Item', required: true })
+  itemId: Item;
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true })
+  gymId: Item;
 
   @Prop({ enum: STATUS_ORDER, default: STATUS_ORDER.BOUGHT })
   status: string;
@@ -27,9 +23,6 @@ export class Order extends hasOwner{
 
   @Prop({ required: true })
   date: string;
-
-  @Prop({ required: true })
-  total: number;
 }
 
 export const OrderSchema = SchemaFactory.createForClass(Order);

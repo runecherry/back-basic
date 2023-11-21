@@ -4,7 +4,6 @@ import { Order, OrderDocument } from './schema/order.schema';
 import { Model, Types } from 'mongoose';
 import { OrderUpdateDto } from './dto/OrderUpdateDto.dto';
 import { OrderCreateDto } from './dto/OrderCreateDto.dto';
-import {STATUS_SHIPPING} from "../utils/enums/status_shipping.enum";
 import {STATUS_ORDER} from "../utils/enums/status_order.enum";
 
 @Injectable()
@@ -45,8 +44,8 @@ export class OrderService{
           if(!userIdObject)
             throw new HttpException('User Id wrong', 409)
             const list = isAdmin
-            ? await this.OrderModel.find().populate("owner").populate("items.item_id").exec()
-            : await this.OrderModel.find({owner: userIdObject}).populate("items.item_id").exec();
+            ? await this.OrderModel.find().populate("owner").populate("itemId").exec()
+            : await this.OrderModel.find({owner: userIdObject}).populate("itemId").exec();
           return list
         } catch (error) {
           console.log({ErrorListOrders: error})
@@ -63,8 +62,8 @@ export class OrderService{
           if(!userIdObject)
               throw new HttpException('User Id wrong', 409)
           const order = isAdmin
-          ? await this.OrderModel.findById(objectId).populate("items.item_id").populate("owner")
-          : await this.OrderModel.findOne({_id: objectId, owner: userIdObject }).populate("items.item_id");
+          ? await this.OrderModel.findById(objectId).populate("owner").populate("itemId")
+          : await this.OrderModel.findOne({_id: objectId, owner: userIdObject }).populate("owner").populate("itemId");
           if(!order)
             throw new HttpException('Order not found!', 404);
           return order
@@ -103,6 +102,7 @@ export class OrderService{
         body.status = STATUS_ORDER.CANCELLED
         return await this.updateOne(id, userId, isAdmin, body)
       }
+
 
       async deactivateOne(id: string, userId: string, isAdmin: boolean){
         const body: OrderUpdateDto = new OrderUpdateDto()

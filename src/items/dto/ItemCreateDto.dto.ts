@@ -1,4 +1,5 @@
 import {IsNotEmpty, IsNumber, IsString} from "class-validator";
+import {Prop} from "@nestjs/mongoose";
 
 export class ItemCreateDto {
     @IsNotEmpty()
@@ -16,5 +17,17 @@ export class ItemCreateDto {
     @IsNotEmpty()
     @IsString()
     readonly description: string;
+
+    @IsNotEmpty()
+    @IsString()
+    readonly date: string;
+
+    @IsNotEmpty()
+    @IsNumber()
+    readonly duration: number;
+
+    @IsNotEmpty()
+    @IsNumber()
+    readonly slots: number;
 
 }

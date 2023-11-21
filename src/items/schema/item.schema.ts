@@ -14,6 +14,15 @@ export class Item extends hasOwner{
   @Prop({ required: true })
   price: number;
 
+  @Prop({ required: true })
+  date: string;
+
+  @Prop({ required: true })
+  duration: number;
+
+  @Prop({ required: true })
+  slots: number;
+
   @Prop({ required: false })
   description: string;
 }

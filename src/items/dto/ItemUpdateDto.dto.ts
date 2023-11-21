@@ -18,4 +18,16 @@ export class ItemUpdateDto extends ItemCreateDto {
     @IsOptional()
     @IsBoolean()
     isActive: boolean;
+
+    @IsOptional()
+    @IsString()
+    readonly date: string;
+
+    @IsOptional()
+    @IsNumber()
+    readonly duration: number;
+
+    @IsOptional()
+    @IsNumber()
+    readonly slots: number;
 }

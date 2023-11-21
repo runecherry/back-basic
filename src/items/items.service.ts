@@ -41,14 +41,15 @@ export class ItemService{
         }
       }
 
-      async findAll(userId: string| Types.ObjectId, isAdmin: boolean) {
+      async findAll(userId: string| Types.ObjectId, isAdmin: boolean, isGym: boolean) {
         try {
           const userIdObject = this.generateObjectId(userId)
           if(!userIdObject)
             throw new HttpException('User Id wrong', 409)
-            const list = isAdmin
-            ? await this.ItemModel.find().exec()
-            : await this.ItemModel.find({isActive: true}).exec();
+
+            const list = isGym
+            ? await this.ItemModel.find({ owner: userIdObject}).populate("owner").exec()
+            : await this.ItemModel.find({isActive: true}).populate("owner").exec();
           return list
         } catch (error) {
           console.log({ErrorListItems: error})

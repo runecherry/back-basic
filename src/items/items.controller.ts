@@ -16,7 +16,7 @@ export class ItemController {
     /* BOTH */
     @Post('create')
     @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles(ROLE.Admin)
+    @Roles(ROLE.Admin, ROLE.Gym)
     async create(@Req() req: any, @Body() body: ItemCreateDto) {
         const {userId, isAdmin} = req.user
         return await this.itemService.create(userId, body);
@@ -25,8 +25,8 @@ export class ItemController {
     @Get('list')
     @UseGuards(JwtAuthGuard)
     async findAll(@Req() req: any) {
-        const {userId, isAdmin} = req.user
-        return await this.itemService.findAll(userId, isAdmin);
+        const {userId, isAdmin, isGym} = req.user
+        return await this.itemService.findAll(userId, isAdmin, isGym);
     }
 
     @Get(':id')
@@ -38,7 +38,7 @@ export class ItemController {
 
     @Put('update/:id')
     @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles(ROLE.Admin)
+    @Roles(ROLE.Admin, ROLE.Gym)
     async update(@Req() req: any, @Param('id') id: string, @Body() body: ItemUpdateDto) {
         const {userId, isAdmin} = req.user
         return await this.itemService.updateOne(id, userId, isAdmin, body);
@@ -46,7 +46,7 @@ export class ItemController {
 
     @Put('activate/:id')
     @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles(ROLE.Admin)
+    @Roles(ROLE.Admin, ROLE.Gym)
     async activeOne(@Req() req: any, @Param('id') id: string) {
         const {userId, isAdmin} = req.user
         return await this.itemService.activateOne(id, userId, isAdmin);
@@ -54,7 +54,7 @@ export class ItemController {
 
     @Put('deactivate/:id')
     @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles(ROLE.Admin)
+    @Roles(ROLE.Admin, ROLE.Gym)
     async deactivateOne(@Req() req: any, @Param('id') id: string) {
         const {userId, isAdmin} = req.user
         return await this.itemService.deactivateOne(id, userId, isAdmin);

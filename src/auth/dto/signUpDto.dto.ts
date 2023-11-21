@@ -30,4 +30,16 @@ export class SignUpDto {
         message: 'Password is too short. Minimal length is $constraint1 characters, but actual is $value',
       })
     readonly password: string;
+
+    @IsOptional()
+    @IsString()
+    readonly name: string;
+
+    @IsOptional()
+    @IsString()
+    readonly type_courses: string;
+
+    @IsOptional()
+    @IsString()
+    readonly surname: string;
 }

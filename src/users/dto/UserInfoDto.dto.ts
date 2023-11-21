@@ -3,7 +3,7 @@ import { Types } from "mongoose";
 import { ROLE } from "src/auth/guards/roles/role.enum";
 
 export class UserInfoDto {
-    @IsNotEmpty()
+    @IsOptional()
     readonly _id: Types.ObjectId;
 
     @IsNotEmpty()
@@ -21,7 +21,15 @@ export class UserInfoDto {
 
     @IsOptional()
     @IsString()
+    readonly type_courses: string;
+
+    @IsOptional()
+    @IsString()
     readonly surname: string;
+
+    @IsOptional()
+    @IsString()
+    readonly identityCard: string;
 
     @IsOptional()
     @IsString()
@@ -40,7 +48,7 @@ export class UserInfoDto {
     @IsEnum(ROLE)
     readonly role: string;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsBoolean()
     isActive: boolean;
 }

@@ -1,9 +1,13 @@
-import {IsArray, IsBoolean, IsNotEmpty, IsNumber, IsOptional, IsString} from "class-validator";
+import {IsArray, IsBoolean, IsNotEmpty, IsNumber, IsObject, IsOptional, IsString} from "class-validator";
 
 export class OrderCreateDto {
     @IsNotEmpty()
-    @IsArray()
-    readonly items: Array<Object>;
+    @IsString()
+    readonly itemId: string;
+
+    @IsNotEmpty()
+    @IsString()
+    readonly gymId: string;
 
     @IsNotEmpty()
     @IsString()
@@ -12,10 +16,6 @@ export class OrderCreateDto {
     @IsNotEmpty()
     @IsString()
     status: string;
-
-    @IsNotEmpty()
-    @IsNumber()
-    total: number;
 
     @IsOptional()
     @IsString()

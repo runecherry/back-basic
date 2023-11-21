@@ -3,8 +3,12 @@ import { OrderCreateDto } from "./OrderCreateDto.dto";
 
 export class OrderUpdateDto extends OrderCreateDto {
     @IsNotEmpty()
-    @IsArray()
-    readonly items: Array<Object>;
+    @IsString()
+    readonly itemId: string;
+
+    @IsNotEmpty()
+    @IsString()
+    readonly gymId: string;
 
     @IsOptional()
     @IsString()
@@ -13,10 +17,6 @@ export class OrderUpdateDto extends OrderCreateDto {
     @IsOptional()
     @IsString()
     status: string;
-
-    @IsOptional()
-    @IsNumber()
-    total: number;
 
     @IsOptional()
     @IsString()

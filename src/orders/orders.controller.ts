@@ -55,7 +55,7 @@ export class OrderController {
         return await this.orderService.deactivateOne(id, userId, isAdmin);
     }
 
-    @Put('cancel/:id')
+    @Delete('cancel/:id')
     @UseGuards(JwtAuthGuard)
     async cancelOne(@Req() req: any, @Param('id') id: string) {
         const {userId, isAdmin} = req.user
